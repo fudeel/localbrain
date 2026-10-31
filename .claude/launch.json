@@ -6,6 +6,18 @@
       "runtimeExecutable": "/usr/local/bin/python3.15",
       "runtimeArgs": ["-m", "brain", "--data-dir", ".brain-dev", "serve"],
       "port": 8484
+    },
+    {
+      "name": "room-advisor",
+      "runtimeExecutable": "/usr/local/bin/python3.15",
+      "runtimeArgs": ["-m", "examples.httpServicesExamples.room_advisor"],
+      "port": 8585
+    },
+    {
+      "name": "robot-mower",
+      "runtimeExecutable": "/usr/local/bin/python3.15",
+      "runtimeArgs": ["-m", "examples.httpServicesExamples.robot_mower"],
+      "port": 8586
     }
   ]
 }

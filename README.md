@@ -11,6 +11,8 @@ your house controllers, kids' games and sensors can all share the same agents.
 - **Exclusively local.** Ollama's cloud models look like local ones, so they are refused by name and
   by what Ollama reports about them. The dashboard loads nothing from the internet.
 
+![The Overview page, showing memory, CPU and disk, the mounted agent, and how many agents can run on this machine](docs/images/dashboard-overview.png)
+
 ## Start
 
 ```bash
@@ -26,6 +28,49 @@ On a headless machine, this installs Ollama unattended and opens the brain to yo
 ```
 
 Listening on the network turns on the API token automatically. Run `./run.sh token` to see it.
+
+## A quick tour
+
+The brain sits between your programs and Ollama. The dashboard and your programs use the same API:
+
+```
+Dashboard, games, sensors, house controllers
+                    |
+                 HTTP API
+                    |
+             Local AI Brain      manages agents, keeps history and device readings
+                    |
+                  Ollama         runs the models on this machine
+```
+
+These screenshots come from the CPU-only test machine with 8 GB of RAM, so your numbers will differ.
+
+### Overview
+
+The page at the top of this README shows what the machine has, which agents are in memory, and how
+many agents it can run.
+
+### Agents
+
+Shows what can run on this machine and why. From here you can install, mount, unmount and uninstall
+agents, or check any other model by name.
+
+![The Agents page, listing agents with their download size, memory needed and a verdict such as Runs well](docs/images/dashboard-agents.png)
+
+### Talk
+
+Chat with any installed agent. Conversations are saved, and each reply shows its speed.
+
+![The Talk page, with an agent answering a request for a joke about a robot that mows the lawn](docs/images/dashboard-talk.png)
+
+### Connections
+
+Lists everything that has reported to the brain, with its latest readings. `Live` means it reported
+in the last 5 minutes. The page also gives you code to connect something new.
+
+![The Connections page, with a game and three rooms listed alongside their latest readings](docs/images/dashboard-connections.png)
+
+A program appears here once it sends a reading. One that only chats with agents isn't listed.
 
 ## What "agent" means here
 
@@ -112,6 +157,13 @@ python3.15 -m examples.house_controller qwen3:4b-q4_K_M "It's dark in the kitche
 ```bash
 python3.15 -m examples.story_game qwen3:4b-q4_K_M
 ```
+
+### Example web services
+
+[Two complete web services](examples/httpServicesExamples/README.md) show how to build on the brain
+without changing it: a room comfort advisor, and a kids' game where an agent drives a robot mower.
+
+[![The Robot Mower game, with a robot crossing a lawn and cutting patches of grass](docs/images/robot-mower-playing.png)](examples/httpServicesExamples/README.md)
 
 ### HTTP
 
