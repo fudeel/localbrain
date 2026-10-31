@@ -122,6 +122,9 @@ estimates: once an agent is mounted, you see the real number instead.
 
 ## Connecting your own programs
 
+Before you build a client, read the [client guide](docs/client-guide.md). It covers what the brain
+does, what it expects from clients, what they can expect back, and best practices, especially for IoT.
+
 ### Python
 
 `brain/sdk.py` has no dependencies, so you can copy that one file onto any machine with Python 3.15.

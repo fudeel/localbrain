@@ -148,4 +148,6 @@ on a network, add your own access control.
 6. **Report what your service is doing.** Send readings with `brain.report(...)` so it appears under
    **Connections**.
 
-The [main README](../../README.md#connecting-your-own-programs) lists every API call and chat field.
+The [client guide](../../docs/client-guide.md) has the full rules and best practices, including for
+IoT, and the [main README](../../README.md#connecting-your-own-programs) lists every API call and
+chat field.
