@@ -1,0 +1,66 @@
+# Build and push deploy/Dockerfile first, then replace the image below.
+#   kubectl apply -f deploy/kubernetes.yaml
+#   kubectl exec deploy/local-ai-brain -- python -m brain token
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-ai-brain
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 100Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-ai-brain
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: local-ai-brain
+  template:
+    metadata:
+      labels:
+        app: local-ai-brain
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: brain
+          image: your-registry/local-ai-brain:latest
+          ports:
+            - containerPort: 8484
+          # The brain reads these limits and only offers agents that fit within them.
+          resources:
+            requests:
+              cpu: "2"
+              memory: 4Gi
+            limits:
+              memory: 8Gi
+              # nvidia.com/gpu: 1
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8484
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: local-ai-brain
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: local-ai-brain
+spec:
+  selector:
+    app: local-ai-brain
+  ports:
+    - port: 8484
+      targetPort: 8484

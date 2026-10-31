@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "local-ai-brain"
+description = "Run, manage and talk to local Ollama agents on any Linux machine."
+readme = "README.md"
+requires-python = ">=3.15"
+dependencies = []
+dynamic = ["version"]
+
+[project.scripts]
+brain = "brain.interfaces.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "brain.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["brain*"]
+
+[tool.setuptools.package-data]
+"brain.infrastructure" = ["catalog.json"]
+"brain.web" = ["*.html", "*.css", "*.svg", "js/*.js", "js/views/*.js"]

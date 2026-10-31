@@ -1,0 +1,19 @@
+# Starts the brain at boot. systemd needs a full path here, so run these from the project folder,
+# which fills in your user and that folder as it installs the file:
+#   sed -e "s|YOUR_USER|$USER|" -e "s|/path/to/local-ai-brain|$PWD|" deploy/local-ai-brain.service \
+#     | sudo tee /etc/systemd/system/local-ai-brain.service
+#   sudo systemctl enable --now local-ai-brain
+[Unit]
+Description=Local AI Brain
+After=network-online.target ollama.service
+Wants=network-online.target
+
+[Service]
+User=YOUR_USER
+WorkingDirectory=/path/to/local-ai-brain
+ExecStart=/usr/local/bin/python3.15 -m brain serve --host 0.0.0.0
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

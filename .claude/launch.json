@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "brain",
+      "runtimeExecutable": "/usr/local/bin/python3.15",
+      "runtimeArgs": ["-m", "brain", "--data-dir", ".brain-dev", "serve"],
+      "port": 8484
+    }
+  ]
+}
